@@ -4,6 +4,7 @@ const favicon = require('serve-favicon');
 const logger = require('morgan');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
+const moment = require('moment');
 
 const indexRoutes = require('./routes/index');
 const channelRoutes = require('./routes/channels');
@@ -35,9 +36,9 @@ io.on('connection', socket => {
     socket.join(channel);
   });
 
-  socket.on('new_message', data => {
-    console.log(`message: '${data.message}', posted in channel: '${data.channel}'`);
-    io.to(data.channel).emit('new_message', data.message);
+  socket.on('new_message', message => {
+    console.log(`message: '${message.body}', posted in channel: '${message.channel}'`);
+    io.to(message.channel).emit('new_message', { body: message.body, createdTime: moment().format('h:mm:ss') });
   });
 
   socket.on('disconnect', () => {
@@ -47,7 +48,7 @@ io.on('connection', socket => {
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
-  var err = new Error('Not Found');
+  let err = new Error('Not Found');
   err.status = 404;
   next(err);
 });

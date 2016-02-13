@@ -12,16 +12,17 @@ $(function() {
 
   // For now, just add a li with the message
   socket.on('new_message', function(message) {
-    $messages.append($('<li>').text(message));
+    var formattedMessage = message.createdTime + " => " + message.body
+    $messages.append($('<li>').text(formattedMessage));
+    $messages.scrollTop($('.messages').prop("scrollHeight"));
   });
 
   // Emit 'new_message' event and reset form
   $chatForm.submit(function() {
     var $messageInput = $('#m');
 
-    socket.emit('new_message', { channel: channel, message: $messageInput.val() });
+    socket.emit('new_message', { channel: channel, body: $messageInput.val() });
     $messageInput.val('');
-    $messages.scrollTop($messages.prop('scrollHeight'));
 
     return false;
   });
