@@ -1,0 +1,24 @@
+doctype html
+html(lang='en')
+  head
+    meta(charset='utf-8')
+    meta(name='viewport' content='width=device-width, initial-scale=1, shrink-to-fit=no')
+    meta(http-equiv='x-ua-compatible' content='ie=edge')
+
+    title= title
+
+    link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.2/css/bootstrap.min.css')
+    link(rel='stylesheet', href='/stylesheets/style.css')
+    link(rel='icon', type='image/x-icon', href='/favicon.ico')
+  body
+    header(class='pos-f-t')
+      nav(class='navbar navbar-light navbar-static-top bg-faded')
+        div(class='container')
+          a(class='navbar-brand' href='/') Awesome Chat
+
+    section(class='container full-height m-t-3 p-t-3')
+      block content
+
+    footer(class='footer bottom-aligned')
+      div(class='container')
+        p(class='text-muted text-xs-center m-b-0') &copy; 2015

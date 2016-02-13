@@ -1,0 +1,29 @@
+/* Global Style
+-------------------------------------------------- */
+.bottom-aligned {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+}
+
+.footer {
+  line-height: 3rem;
+  background-color: #f5f5f5;
+}
+
+/* Utilities
+-------------------------------------------------- */
+.border-none {
+  border: none;
+}
+
+.overflow-scroll {
+  overflow: scroll;
+}
+
+/* Chat page style
+-------------------------------------------------- */
+.messages li:nth-child(odd) {
+  background: #eee;
+}
