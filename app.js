@@ -1,3 +1,4 @@
+// Dependency imports
 const express = require('express');
 const path = require('path');
 const favicon = require('serve-favicon');
@@ -6,9 +7,23 @@ const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const moment = require('moment');
 
+// TODO: clean up redis config
+var redis;
+if (process.env.REDIS_URL) {
+  let url = require("url").parse(process.env.REDIS_URL);
+  redis = require("redis").createClient(url.port, url.hostname);
+  redis.auth(url.auth.split(":")[1]);
+} else {
+  redis = require("redis").createClient();
+}
+
+// App imports
+const chatHistory = require('./src/chat-history').ChatHistory(redis);
+const clientConnectionHandler = require('./src/client-connection-handler');
 const indexRoutes = require('./routes/index');
 const channelRoutes = require('./routes/channels');
 
+// Set up express and socket.io
 const app = express();
 const server = require('http').Server(app);
 const io = require('socket.io')(server);
@@ -28,23 +43,7 @@ app.use('/', indexRoutes);
 app.use('/channels/', channelRoutes);
 
 // Socket.io events
-io.on('connection', socket => {
-  console.log('a user connected');
-
-  socket.on('join_channel', channel => {
-    console.log(`a user joined ${channel}`);
-    socket.join(channel);
-  });
-
-  socket.on('new_message', message => {
-    console.log(`message: '${message.body}', posted in channel: '${message.channel}'`);
-    io.to(message.channel).emit('new_message', { body: message.body, createdTime: moment().format('h:mm:ss') });
-  });
-
-  socket.on('disconnect', () => {
-    console.log('a user disconnected');
-  });
-});
+io.on('connection', socket => clientConnectionHandler(io, socket, chatHistory, moment));
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
@@ -52,8 +51,6 @@ app.use((req, res, next) => {
   err.status = 404;
   next(err);
 });
-
-// error handlers
 
 // development error handler
 // will print stacktrace
@@ -76,7 +73,6 @@ app.use((err, req, res, next) => {
     error: {}
   });
 });
-
 
 module.exports = {
   app,

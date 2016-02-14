@@ -3,15 +3,16 @@ extends layout
 block content
   script(type='text/javascript', src='/socket.io/socket.io.js')
   script(type='text/javascript', src='https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js')
+  script(type='text/javascript', src='https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.11.2/moment.min.js')
   script(type='text/javascript', src='/javascripts/client.js')
 
   div(class='card border-none')
-    div(class='card-header text-capitalize m-b-1') Channel: #{channel}
+    div(class='card-header text-capitalize m-b-1') Channel: #{channelName}
     div(class='card-block p-a-0')
       ol(class='messages list-unstyled overflow-scroll')
 
 
-  form(class='chat-form bottom-aligned m-b-3 p-b-1', action='', data-channel='#{channel}')
+  form(class='chat-form bottom-aligned m-b-3 p-b-1', action='', data-channel-name='#{channelName}')
     div(class='container')
       div(class='row')
         div(class='col-md-11 col-xs-9')

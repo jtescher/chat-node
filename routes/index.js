@@ -1,12 +1,12 @@
 const express = require('express');
 const router = express.Router();
 
-const channels = require('../models/channel').allChannels;
+const channelNames = require('../models/channel').allChannelNames;
 const title = "Channels"
 
 /* GET home page. */
 router.get('/', (req, res, next) => {
-  res.render('index', { title, channels });
+  res.render('index', { title, channelNames });
 });
 
 module.exports = router;

@@ -4,7 +4,7 @@ block content
   h1 Channels
 
   ul(class='list-group m-t-2')
-    each channel in channels
+    each channelName in channelNames
       li(class='list-group-item')
         span(class='label label-default label-pill pull-xs-right') 0
-        a(class='text-capitalize', href='/channels/#{channel}') #{channel}
+        a(class='text-capitalize', href='/channels/#{channelName}') #{channelName}

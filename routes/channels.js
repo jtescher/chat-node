@@ -2,9 +2,9 @@ const express = require('express');
 const router = express.Router();
 
 /* GET channel details. */
-router.get('/:channel/', (req, res, next) => {
-  let channel = req.params.channel;
-  res.render('channel', { title: channel, channel: channel });
+router.get('/:channelName/', (req, res, next) => {
+  let channelName = req.params.channelName;
+  res.render('channel', { title: channelName, channelName: channelName });
 });
 
 module.exports = router;

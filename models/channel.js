@@ -1,5 +1,5 @@
-const allChannels = ["startups", "chatbots"]
+const allChannelNames = ["startups", "chatbots"]
 
 module.exports = {
-  allChannels
+  allChannelNames
 }
